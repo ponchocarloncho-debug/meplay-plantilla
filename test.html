@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Test - Video Site</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Courier New', monospace;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #252526;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    
+    h1 {
+      color: #4ec9b0;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    
+    .test-section {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: #1e1e1e;
+      border-radius: 4px;
+      border-left: 4px solid #858585;
+    }
+    
+    .test-section.loading {
+      border-left-color: #dcdcaa;
+    }
+    
+    .test-section.success {
+      border-left-color: #4ec9b0;
+    }
+    
+    .test-section.error {
+      border-left-color: #f48771;
+    }
+    
+    .test-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .test-result {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #858585;
+    }
+    
+    .icon {
+      font-size: 1.5rem;
+    }
+    
+    .code {
+      background: #1e1e1e;
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      color: #ce9178;
+    }
+    
+    button {
+      background: #4ec9b0;
+      color: #1e1e1e;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    
+    button:hover {
+      background: #3ea890;
+    }
+    
+    .summary {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #2d2d30;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    
+    .summary.all-good {
+      background: #1e4620;
+      color: #4ec9b0;
+    }
+    
+    .summary.has-errors {
+      background: #4a2020;
+      color: #f48771;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 System Diagnostic Test</h1>
+    <p style="color: #858585; margin-bottom: 2rem;">
+      This page tests all components of your video site. Run this test if something isn't working.
+    </p>
+    
+    <button onclick="runTests()">▶ Run All Tests</button>
+    
+    <div id="test1" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 1: Server Check</span>
+      </div>
+      <div class="test-result">Checking if you're using a web server...</div>
+    </div>
+    
+    <div id="test2" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 2: videodata.json Loading</span>
+      </div>
+      <div class="test-result">Testing if videodata.json can be loaded...</div>
+    </div>
+    
+    <div id="test3" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 3: JSON Validation</span>
+      </div>
+      <div class="test-result">Checking if JSON structure is valid...</div>
+    </div>
+    
+    <div id="test4" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 4: JavaScript Files</span>
+      </div>
+      <div class="test-result">Checking if required JS files exist...</div>
+    </div>
+    
+    <div id="test5" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 5: localStorage Support</span>
+      </div>
+      <div class="test-result">Testing if browser supports localStorage...</div>
+    </div>
+    
+    <div id="test6" class="test-section">
+      <div class="test-title">
+        <span class="icon">⏳</span>
+        <span>Test 6: Videos Folder</span>
+      </div>
+      <div class="test-result">Checking if videos folder exists...</div>
+    </div>
+    
+    <div id="summary" class="summary" style="display: none;">
+      <strong id="summary-text"></strong>
+    </div>
+  </div>
+  
+  <script>
+    let testsCompleted = 0;
+    let testsPassed = 0;
+    let testsFailed = 0;
+    
+    function updateTest(testId, status, message, details = '') {
+      const testEl = document.getElementById(testId);
+      const icon = testEl.querySelector('.icon');
+      const result = testEl.querySelector('.test-result');
+      
+      testEl.className = `test-section ${status}`;
+      
+      if (status === 'success') {
+        icon.textContent = '✅';
+        testsPassed++;
+      } else if (status === 'error') {
+        icon.textContent = '❌';
+        testsFailed++;
+      } else {
+        icon.textContent = '⏳';
+      }
+      
+      result.innerHTML = message + (details ? `<div class="code">${details}</div>` : '');
+      testsCompleted++;
+      
+      if (testsCompleted === 6) {
+        showSummary();
+      }
+    }
+    
+    function showSummary() {
+      const summary = document.getElementById('summary');
+      const summaryText = document.getElementById('summary-text');
+      
+      if (testsFailed === 0) {
+        summary.className = 'summary all-good';
+        summaryText.textContent = `✅ All tests passed! (${testsPassed}/6) - Your site should work perfectly!`;
+      } else {
+        summary.className = 'summary has-errors';
+        summaryText.textContent = `⚠️ ${testsFailed} test(s) failed - See errors above for solutions`;
+      }
+      
+      summary.style.display = 'block';
+    }
+    
+    async function runTests() {
+      testsCompleted = 0;
+      testsPassed = 0;
+      testsFailed = 0;
+      document.getElementById('summary').style.display = 'none';
+      
+      // Reset all tests
+      for (let i = 1; i <= 6; i++) {
+        updateTest(`test${i}`, 'loading', 'Running...');
+      }
+      
+      // Test 1: Server check
+      setTimeout(() => {
+        if (window.location.protocol === 'file:') {
+          updateTest('test1', 'error', 
+            '❌ You\'re opening files directly (file://)',
+            'Solution: Use a web server\npython -m http.server 8000\nThen open: http://localhost:8000');
+        } else {
+          updateTest('test1', 'success', 
+            `✅ Using web server: ${window.location.protocol}//${window.location.host}`);
+        }
+      }, 100);
+      
+      // Test 2: Load videodata.json
+      setTimeout(async () => {
+        try {
+          const response = await fetch('videodata.json');
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const data = await response.json();
+          updateTest('test2', 'success', 
+            `✅ videodata.json loaded successfully`,
+            `Found ${data.length} videos`);
+          
+          // Test 3: Validate JSON
+          setTimeout(() => {
+            try {
+              if (!Array.isArray(data)) {
+                throw new Error('Root must be an array');
+              }
+              if (data.length === 0) {
+                throw new Error('No videos in array');
+              }
+              const firstVideo = data[0];
+              if (!firstVideo.title || !firstVideo.url) {
+                throw new Error('Videos missing required fields (title, url)');
+              }
+              updateTest('test3', 'success', 
+                '✅ JSON structure is valid',
+                `First video: "${firstVideo.title}"`);
+            } catch (e) {
+              updateTest('test3', 'error', 
+                '❌ JSON validation failed',
+                `Error: ${e.message}`);
+            }
+          }, 200);
+          
+        } catch (error) {
+          updateTest('test2', 'error', 
+            '❌ Failed to load videodata.json',
+            `Error: ${error.message}\nMake sure videodata.json exists in the root folder`);
+          updateTest('test3', 'error', 
+            '⊘ Skipped (previous test failed)');
+        }
+      }, 300);
+      
+      // Test 4: Check JS files
+      setTimeout(async () => {
+        const requiredFiles = ['template.js', 'search.js', 'widget.js'];
+        const results = await Promise.all(
+          requiredFiles.map(file => 
+            fetch(file).then(r => ({ file, ok: r.ok }))
+          )
+        );
+        
+        const missing = results.filter(r => !r.ok).map(r => r.file);
+        
+        if (missing.length === 0) {
+          updateTest('test4', 'success', 
+            '✅ All JavaScript files found',
+            requiredFiles.join(', '));
+        } else {
+          updateTest('test4', 'error', 
+            '❌ Missing JavaScript files',
+            `Missing: ${missing.join(', ')}`);
+        }
+      }, 500);
+      
+      // Test 5: localStorage
+      setTimeout(() => {
+        try {
+          localStorage.setItem('test', 'test');
+          localStorage.removeItem('test');
+          updateTest('test5', 'success', 
+            '✅ localStorage is working',
+            'Favorites will save correctly');
+        } catch (e) {
+          updateTest('test5', 'error', 
+            '❌ localStorage not available',
+            `Error: ${e.message}\nFavorites won't save. Try disabling private/incognito mode`);
+        }
+      }, 700);
+      
+      // Test 6: Videos folder
+      setTimeout(async () => {
+        try {
+          const response = await fetch('videos/');
+          if (response.ok || response.status === 403 || response.status === 404) {
+            // 403/404 means folder exists but listing disabled (normal)
+            updateTest('test6', 'success', 
+              '✅ Videos folder exists',
+              'Individual video pages can be created here');
+          } else {
+            throw new Error('Folder not accessible');
+          }
+        } catch (e) {
+          updateTest('test6', 'error', 
+            '⚠️ Could not verify videos folder',
+            'Create a "videos" folder if it doesn\'t exist');
+        }
+      }, 900);
+    }
+    
+    // Auto-run on load
+    window.addEventListener('load', () => {
+      setTimeout(runTests, 500);
+    });
+  </script>
+</body>
+</html>

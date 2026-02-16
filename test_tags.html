@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Tags</title>
+</head>
+<body>
+    <h1>Test de Tags Clickeables</h1>
+    
+    <div id="searchInput" style="border: 1px solid #ccc; padding: 10px; margin: 20px 0;">
+        Search box: <span id="searchValue">empty</span>
+    </div>
+    
+    <div id="searchResults" style="border: 1px solid green; padding: 10px; margin: 20px 0; display: none;">
+        Results will appear here
+    </div>
+    
+    <h2>Tags:</h2>
+    <span class="tag" onclick="searchByTag('test tag 1')" style="cursor: pointer; background: #eee; padding: 5px 10px; margin: 5px; display: inline-block;">test tag 1</span>
+    <span class="tag" onclick="searchByTag('test tag 2')" style="cursor: pointer; background: #eee; padding: 5px 10px; margin: 5px; display: inline-block;">test tag 2</span>
+    
+    <script>
+        const searchInput = { value: '' };
+        const searchResults = document.getElementById('searchResults');
+        
+        function searchByTag(tag) {
+            console.log('searchByTag called with:', tag);
+            searchInput.value = tag;
+            document.getElementById('searchValue').textContent = tag;
+            
+            searchResults.textContent = 'Searching for: ' + tag;
+            searchResults.style.display = 'block';
+        }
+        
+        window.searchByTag = searchByTag;
+        console.log('searchByTag is defined:', typeof searchByTag);
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Structure - Video Site Template</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Monaco', 'Courier New', monospace;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #252526;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    
+    h1 {
+      color: #4ec9b0;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      border-bottom: 2px solid #4ec9b0;
+      padding-bottom: 0.5rem;
+    }
+    
+    h2 {
+      color: #569cd6;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    
+    .tree {
+      background: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 4px;
+      border-left: 4px solid #4ec9b0;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    
+    .tree-line {
+      color: #858585;
+      margin-left: 1rem;
+      position: relative;
+    }
+    
+    .tree-line::before {
+      content: '├─ ';
+      color: #858585;
+      position: absolute;
+      left: -1rem;
+    }
+    
+    .tree-line.last::before {
+      content: '└─ ';
+    }
+    
+    .tree-line.folder {
+      color: #569cd6;
+      font-weight: bold;
+    }
+    
+    .tree-line.file-js {
+      color: #dcdcaa;
+    }
+    
+    .tree-line.file-html {
+      color: #ce9178;
+    }
+    
+    .tree-line.file-json {
+      color: #4ec9b0;
+    }
+    
+    .tree-line.file-md {
+      color: #d7ba7d;
+    }
+    
+    .tree-line.file-css {
+      color: #c586c0;
+    }
+    
+    .tree-line.file-py {
+      color: #4ec9b0;
+    }
+    
+    .indent-1 { margin-left: 2rem; }
+    .indent-2 { margin-left: 3rem; }
+    
+    .icon {
+      margin-right: 0.5rem;
+    }
+    
+    .description {
+      color: #858585;
+      font-size: 0.9rem;
+      margin-left: 2.5rem;
+      font-style: italic;
+    }
+    
+    .badge {
+      display: inline-block;
+      background: #e50914;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .badge.optional {
+      background: #569cd6;
+    }
+    
+    .badge.generated {
+      background: #4ec9b0;
+    }
+    
+    .section {
+      background: #2d2d30;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      border-left: 4px solid #569cd6;
+    }
+    
+    code {
+      background: #1e1e1e;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      color: #ce9178;
+    }
+    
+    .note {
+      background: #373737;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid #dcdcaa;
+      margin: 1rem 0;
+    }
+    
+    .note-title {
+      color: #dcdcaa;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📁 Video Site Template - Project Structure</h1>
+    
+    <div class="note">
+      <div class="note-title">🎯 Quick Understanding</div>
+      <p>This template uses a <strong>modular approach</strong> where:</p>
+      <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+        <li><code>template.js</code> = Your site configuration (edit once, affects all pages)</li>
+        <li><code>videodata.json</code> = Your video database</li>
+        <li><code>widget.js</code> = Video recommendations widget</li>
+        <li><code>search.js</code> = Search functionality</li>
+      </ul>
+    </div>
+
+    <h2>📦 File Structure</h2>
+    
+    <div class="tree">
+      <div class="tree-line folder"><span class="icon">📂</span> your-site/</div>
+      
+      <div class="tree-line file-html indent-1"><span class="icon">📄</span> index.html <span class="badge">MAIN</span></div>
+      <div class="description indent-1">Home page showing all videos in a grid</div>
+      
+      <div class="tree-line file-html indent-1"><span class="icon">📄</span> favorites.html</div>
+      <div class="description indent-1">Favorites page with localStorage integration</div>
+      
+      <div class="tree-line file-js indent-1"><span class="icon">⚙️</span> template.js <span class="badge">EDIT THIS!</span></div>
+      <div class="description indent-1">🔥 Main configuration: logo, ads, navigation, colors</div>
+      
+      <div class="tree-line file-js indent-1"><span class="icon">🔍</span> search.js</div>
+      <div class="description indent-1">Search functionality - filters videodata.json</div>
+      
+      <div class="tree-line file-js indent-1"><span class="icon">🎲</span> widget.js</div>
+      <div class="description indent-1">Random/recent videos widget with favorites</div>
+      
+      <div class="tree-line file-json indent-1"><span class="icon">📊</span> videodata.json <span class="badge">EDIT THIS!</span></div>
+      <div class="description indent-1">🔥 Your video database - add new videos here</div>
+      
+      <div class="tree-line file-html indent-1"><span class="icon">📄</span> video-template.html</div>
+      <div class="description indent-1">Template for creating individual video pages</div>
+      
+      <div class="tree-line file-css indent-1"><span class="icon">🎨</span> styles.css <span class="badge optional">OPTIONAL</span></div>
+      <div class="description indent-1">Optional CSS file for easier customization</div>
+      
+      <div class="tree-line file-md indent-1"><span class="icon">📖</span> README.md</div>
+      <div class="description indent-1">Comprehensive documentation</div>
+      
+      <div class="tree-line file-md indent-1"><span class="icon">⚡</span> QUICKSTART.md</div>
+      <div class="description indent-1">Quick start guide - 5 minute setup</div>
+      
+      <div class="tree-line file-js indent-1"><span class="icon">🤖</span> generate-pages.js <span class="badge optional">OPTIONAL</span></div>
+      <div class="description indent-1">Auto-generate video pages (Node.js)</div>
+      
+      <div class="tree-line file-py indent-1"><span class="icon">🐍</span> generate-pages.py <span class="badge optional">OPTIONAL</span></div>
+      <div class="description indent-1">Auto-generate video pages (Python)</div>
+      
+      <div class="tree-line folder indent-1 last"><span class="icon">📂</span> videos/</div>
+      <div class="tree-line file-html indent-2"><span class="icon">📄</span> diego-yoga.html <span class="badge generated">EXAMPLE</span></div>
+      <div class="description indent-2">Example video page</div>
+      <div class="tree-line file-html indent-2"><span class="icon">📄</span> video-2.html</div>
+      <div class="tree-line file-html indent-2 last"><span class="icon">📄</span> ...</div>
+      <div class="description indent-2">More video pages (create from template)</div>
+    </div>
+
+    <h2>🔄 How It Works</h2>
+    
+    <div class="section">
+      <h3 style="color: #4ec9b0; margin-bottom: 0.5rem;">1. Configuration (template.js)</h3>
+      <p>Edit once, applies to all pages:</p>
+      <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+        <li>Site name and logo</li>
+        <li>Ad script (injected in &lt;head&gt;)</li>
+        <li>Navigation buttons</li>
+        <li>Search bar</li>
+        <li>Footer</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h3 style="color: #4ec9b0; margin-bottom: 0.5rem;">2. Video Database (videodata.json)</h3>
+      <p>Single source of truth for all videos:</p>
+      <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+        <li>Powers the home page grid</li>
+        <li>Powers the search functionality</li>
+        <li>Powers the widget recommendations</li>
+        <li>Used by page generators</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h3 style="color: #4ec9b0; margin-bottom: 0.5rem;">3. Each Page Loads</h3>
+      <p>Every HTML page includes these scripts:</p>
+      <pre style="background: #1e1e1e; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>&lt;script src="template.js"&gt;&lt;/script&gt;  &lt;!-- Header/footer --&gt;
+&lt;script src="search.js"&gt;&lt;/script&gt;    &lt;!-- Search --&gt;
+&lt;script src="widget.js"&gt;&lt;/script&gt;     &lt;!-- Widgets --&gt;</code></pre>
+    </div>
+
+    <h2>✏️ Common Edits</h2>
+    
+    <div class="section">
+      <h3 style="color: #dcdcaa;">Change Ad Script</h3>
+      <p style="margin-top: 0.5rem;">📝 Edit: <code>template.js</code> → <code>SITE_CONFIG.adScript</code></p>
+    </div>
+    
+    <div class="section">
+      <h3 style="color: #dcdcaa;">Change Logo</h3>
+      <p style="margin-top: 0.5rem;">📝 Edit: <code>template.js</code> → <code>SITE_CONFIG.logoText</code> or <code>logoImage</code></p>
+    </div>
+    
+    <div class="section">
+      <h3 style="color: #dcdcaa;">Add New Video</h3>
+      <p style="margin-top: 0.5rem;">📝 Steps:</p>
+      <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+        <li>Add entry to <code>videodata.json</code></li>
+        <li>Create page in <code>videos/</code> (copy template or use generator)</li>
+        <li>Done! Appears everywhere automatically</li>
+      </ol>
+    </div>
+    
+    <div class="section">
+      <h3 style="color: #dcdcaa;">Change Colors</h3>
+      <p style="margin-top: 0.5rem;">📝 Option 1: Search/replace in files: <code>#e50914</code> (red), <code>#141414</code> (background)</p>
+      <p style="margin-top: 0.5rem;">📝 Option 2: Use <code>styles.css</code> and edit CSS variables</p>
+    </div>
+
+    <h2>🚀 Next Steps</h2>
+    
+    <div class="note">
+      <div class="note-title">👉 Start Here</div>
+      <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+        <li>Read <code>QUICKSTART.md</code> for 5-minute setup</li>
+        <li>Edit <code>template.js</code> with your site name and ad code</li>
+        <li>Test locally with <code>python -m http.server 8000</code></li>
+        <li>Deploy to GitHub Pages</li>
+        <li>Add more videos to <code>videodata.json</code></li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #3e3e42; color: #858585;">
+      <p>📚 For detailed documentation, see <strong>README.md</strong></p>
+      <p style="margin-top: 0.5rem;">⚡ For quick start, see <strong>QUICKSTART.md</strong></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<!-- ========== PASTE YOUR ADS SCRIPT HERE ========== -->
+<script>
+  // Paste your AdSense, PropellerAds, or other ad network script here
+  // Example:
+  // (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<!-- ========== END ADS SCRIPT ========== -->
